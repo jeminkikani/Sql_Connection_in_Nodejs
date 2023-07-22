@@ -41,15 +41,14 @@ userRoutes.get('/get-user' , async(req,res)=>{
         res.status(200).json(data)
     } )
 })
-
-userRoutes.delete('/delete-user' , async(req,res)=>{
+userRoutes.delete('/delete-user', (req,res)=>{
     try {
-      const {user_name} = req.body;
-        connection.query("delete from user where user_name", user_name ,(error)=>{
+      const {email} = req.body;
+        connection.query("delete from user where email=?", email ,(error , data)=>{
             if(error){
               console.log(error)
             }
-            res.status(200).json('your data has been succesfully deleted..')
+            res.status(200).json({data, msg:'your data has been succesfully deleted..'})
         })
         
     } catch (error) {
